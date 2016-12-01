@@ -27,8 +27,8 @@ namespace Gateway
 			.ToDictionary(s => s.Rule, service => new ProxyOptions
 			{
 				BackChannelMessageHandler = new RequestHandler(
-					Decorate(r => RuleUrlModifier(r, service.Rule), 
-					r => ApiKey(r, service.Key.Name, service.Key.Value), 
+					Decorate(RuleUrlModifier(service.Rule), 
+					ApiKey(service.Key.Name, service.Key.Value), 
 					Retry, CircutBreaker)),
 				Host = new Uri(service.Url).Host,
 				Port = new Uri(service.Url).Port.ToString(),

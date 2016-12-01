@@ -13,8 +13,14 @@ namespace Fiffi.Gateway
 		public static Func<Req, Req> Decorate(params Func<Req, Req>[] policyRequests)
 		=> req => policyRequests.Aggregate((left, right) => inputReq => left(right(inputReq)))(req);
 
+		public static Func<Req, Req> RuleUrlModifier(string rule) =>
+			r => RuleUrlModifier(r, rule);
+
 		public static Req RuleUrlModifier(Req r, string rule) =>
 		 (message, token) => r(message, token); //TODO fix url
+
+		public static Func<Req, Req> ApiKey(string keyName, string key) =>
+			r => ApiKey(r, keyName, key);
 
 		public static Req ApiKey(Req r, string keyName, string key)
 			=> (message, token) =>
